@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+<title th:text="首页"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="UTF-8" />
+</head>
+<body>
+	<table>
+		<tr th:each="student: ${students}">
+			<td th:text="${student.id}"></td>
+			<td th:text="${student.name}"></td>
+			<td th:text="${student.sex}"></td>
+		</tr>
+	</table>
+</body>
+</html>

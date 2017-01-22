@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+<title th:text="首页"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/lib/datatables/css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{/lib/datatables/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/common.css}" rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+		<div class="table-responsive">
+			<table class="display compact nowrap table-box" id="stuTable">
+			</table>
+		</div>
+	</div>
+	<script th:src="@{/lib/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/lib/datatables/js/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+	//<![CDATA[
+		$(function() {
+			var tableConfig = {
+				"language" : {
+					"emptyTable" : "无数据",
+					"zeroRecords" : "无数据",
+					"processing" : "正在加载数据,请稍等...",
+					"loadingRecords" : "正在加载数据,请稍等...",
+					"search" : "页内搜索:",
+					"info" : "共  _MAX_ 条 -- 显示 _START_ 到 _END_ 条",
+					"infoEmpty" : "",
+					"lengthMenu" : "-- 显示 _MENU_ 条数据",
+					"paginate" : {
+						"first" : "首页",
+						"last" : "尾页",
+						"next" : "下页",
+						"previous" : "上页"
+					},
+					"aria" : {
+						"sortAscending" : "正序",
+						"sortDescending" : "倒叙"
+					}
+				},
+				"deferRender" : true,
+				"stateSave" : false,
+				"autoWidth" : true,
+				"scrollX" : "100%",
+				"scrollCollapse" : false,
+				"searching" : false,
+				"paging" : true,
+				"lengthMenu" : [ 15, 20, 25, 30 ],
+				"pageLength" : 25,
+				"pagingType" : "simple_numbers",
+				"ordering" : true,
+				"orderMulti" : true,
+				"info" : true,
+				"serverSide" : true,
+				"ajax" : "",
+				"processing" : true,
+				"renderer" : "bootstrap",
+				"dom" : "Zfrtilp",
+				"colResize" : {
+					"tableWidthFixed" : true
+				},
+			};
+			
+			tableConfig.columns = [
+			    {"data": "name", "orderable": false, "title": "姓名"} ,
+			    {"data": "sex", "orderable": false, "title": "性别", "render":sexRender}
+			];
+			tableConfig.ajax = doSearch;
+			$("#stuTable").DataTable(tableConfig);
+		});
+		
+		function sexRender(data, type, row, meta){
+			if(data==0){
+	      		return "男";
+	      	}else{
+	      		return "女";
+	      	}
+		}
+		
+		function doSearch(data, callback, settings){
+			var page = JSON.stringify(data);
+			var para = "jsonPage=" + page;
+			$.ajax({
+				url:/*[[@{/stu/page}]]*/,
+				type:'post',
+				data:para,
+				success:function(data){
+					callback(data);
+				}
+			});
+		}
+	//]]>
+	</script>
+</body>
+</html>
