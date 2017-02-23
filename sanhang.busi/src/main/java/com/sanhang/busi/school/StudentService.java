@@ -9,5 +9,9 @@ public interface StudentService {
 	List<Student> findAll();
 	
 	DataTablesResult<Student> queryByPage(StudentQuery studentQuery);
+	
+	void insertToMongo();
+	
+	void jms();
 
 }

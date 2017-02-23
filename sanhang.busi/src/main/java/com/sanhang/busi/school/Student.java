@@ -2,6 +2,9 @@ package com.sanhang.busi.school;
 
 import java.io.Serializable;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Student implements Serializable {
 	
 	/**

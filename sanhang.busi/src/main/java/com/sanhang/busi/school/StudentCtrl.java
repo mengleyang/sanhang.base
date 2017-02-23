@@ -45,5 +45,17 @@ public class StudentCtrl {
 	public DataTablesResult<Student> page(@ModelAttribute(SESSION_ATTR_QUERY) StudentQuery query){
 		return studentService.queryByPage(query);
 	}
+	
+	@RequestMapping("/insertToMongo")
+	@ResponseBody
+	public void insertToMongo(){
+		studentService.insertToMongo();
+	}
+	
+	@RequestMapping("/jms")
+	@ResponseBody
+	public void jms(){
+		studentService.jms();
+	}
 
 }
